@@ -1,0 +1,31 @@
+{
+  "name": "variation-markov",
+  "version": "0.0.0",
+  "description": "Implementation of variation markov",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ChenyuGAO-CS/variation-markov.git"
+  },
+  "keywords": [
+    "intelligence",
+    "artificial",
+    "music"
+  ],
+  "author": "Chenyu Gao and Tom Collins",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ChenyuGAO-CS/variation-markov/issues"
+  },
+  "dependencies": {
+    "@tonejs/midi": "^2.0.27",
+    "child_process": "^1.0.2",
+    "maia-markov": "^0.1.1",
+    "maia-util": "^0.3.11",
+    "node-jsonl": "^0.1.0",
+    "nodeplotlib": "^0.6.5",
+    "plotly": "^1.0.6",
+    "request": "^2.88.2",
+    "seed-random": "^2.2.0",
+    "uuid": "^3.1.0"
+  }
+}
