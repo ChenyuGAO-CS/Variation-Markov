@@ -2,7 +2,7 @@
 const argv = require('minimist')(process.argv.slice(2))
 const path = require("path")
 const mu = require("maia-util")
-const mm = require('../dist/index')
+const mm = require('maia-markov')
 const an = new mm.Analyzer()
 const gn = new mm.Generator()
 const fs = require("fs")
@@ -13,22 +13,16 @@ const sr = require('seed-random')
 // sr(seed, {global: true})
 
 const mainPaths = {
-  "tom": {
-    "inStm": path.join(
-      "/Users", "tomthecollins", "Shizz", "York", "Students", "Chenyu\ Gao",
-      "markov_infilling", "pop_909_train.json"
-    )
-  },
-  "chenyu": {
-    "inStm": "/Users/gaochenyu/Codes/markov_out/pop909_train.json",
+  "test": {
+    "inStm": "./state_transition_matrix/pop909_train.json",
     "midi": path.join(
-      "/Users/gaochenyu/Dataset/POP909_with_structure_labels/29thSep2023_theme_var_extracted_for_training"),
+      "./dataset/POP909-TVar"),
     "midiDir": "test",
     "themeSample": ["002_A_0.mid", "052_B_0.mid", "597_A_0.mid", "623_A_0.mid", "866_A_0.mid"],
-    "sclPath": "/Users/gaochenyu/Codes/markov_out",
+    "sclPath": "./state_transition_matrix",
     "sclName": "pop909_train_scl.json",
     "outputDir": path.join(
-      "/Users/gaochenyu/Codes/markov_out/out_midi/markov_909"
+      "./out"
     ),
   }
 }

@@ -2,7 +2,7 @@
 const argv = require('minimist')(process.argv.slice(2))
 const path = require("path")
 const mu = require("maia-util")
-const mm = require('../dist/index')
+const mm = require('maia-markov')
 const an = new mm.Analyzer()
 const gn = new mm.Generator()
 const fs = require("fs")
@@ -14,17 +14,17 @@ const { setTimeout } = require('timers')
 // sr(seed, {global: true})
 
 const mainPaths = {
-  "chenyu": {
-    "inStm": "/home/chenyugao/maia-markov/test/markov_out/vgmidi_train.json",
+  "test": {
+    "inStm": "./state_transition_matrix/vgmidi_train.json",
     "midi": path.join(
-      "/home/chenyugao/puct-music-emotion/dataset/23rdOct_vgmidi_theme_var"),
+      "./dataset/VGMIDI-TVar"),
     "midiDir": "test",
     "themeSample": ["e0_real_Ace\ Attorney_Nintendo\ DS_Phoenix\ Wright\ Ace\ Attorney_Ema\ Skye\ Turnabout\ Sisters\ Theme\ 2005_A_0.mid",
                     "e0_real_Castlevania_Game Boy Advance_Castlevania Aria of Sorrow_Inner Quarters_C_0.mid"],
-    "sclPath": "/home/chenyugao/maia-markov/test/markov_out",
+    "sclPath": "./state_transition_matrix",
     "sclName": "vgmidi_train_scl.json",
     "outputDir": path.join(
-      "/home/chenyugao/maia-markov/test/markov_out/markov_vgmidi"
+      "./out"
     ),
   }
 }

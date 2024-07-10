@@ -10,30 +10,18 @@ const path = require("path")
 // const uu = require("uuid/v4")
 const { Midi } = require('@tonejs/midi')
 const mu = require("maia-util")
-const mm = require('../dist/index')
+const mm = require('maia-markov')
 const an = new mm.Analyzer()
 const sr = require("seed-random")
 
 // Individual user paths
 const mainPaths = {
-  "tom": {
+  "pop909": {
     "midi": path.join(
-      "/Users", "tomthecollins", "Shizz", "York", "Students", "Chenyu\ Gao",
-      "datasets", "29thSep2023_theme_var_extracted_for_training"
-    ),
+      "./dataset/POP909-TVar"),
     "midiDirs": ["train"],
     "outputDir": path.join(
-      "/Users", "tomthecollins", "Shizz", "York", "Students", "Chenyu\ Gao",
-      "markov_infilling", ""
-    ),
-    "outputFileName": "pop_909_train"
-  },
-  "chenyu": {
-    "midi": path.join(
-      "/Users/gaochenyu/Dataset/POP909_with_structure_labels/29thSep2023_theme_var_extracted_for_training"),
-    "midiDirs": ["train"],
-    "outputDir": path.join(
-      "/Users/gaochenyu/Codes/markov_out"
+      "./state_transition_matrix"
     ),
     "outputFileName": "pop909_train"
   }

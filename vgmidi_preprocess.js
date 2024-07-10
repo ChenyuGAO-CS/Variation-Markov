@@ -10,7 +10,7 @@ const path = require("path")
 // const uu = require("uuid/v4")
 const { Midi } = require('@tonejs/midi')
 const mu = require("maia-util")
-const mm = require('../dist/index')
+const mm = require('maia-markov')
 const an = new mm.Analyzer()
 const sr = require("seed-random")
 
@@ -18,10 +18,10 @@ const sr = require("seed-random")
 const mainPaths = {
   "vgmidi": {
     "midi": path.join(
-      "/home/chenyugao/puct-music-emotion/dataset/23rdOct_vgmidi_theme_var"),
+      "./dataset/VGMIDI-TVar"),
     "midiDirs": ["train"],
     "outputDir": path.join(
-      "/home/chenyugao/maia-markov/test/markov_out"
+      "./state_transition_matrix"
     ),
     "outputFileName": "vgmidi_train"
   }
