@@ -12,6 +12,8 @@ Please visit [this page](https://github.com/ChenyuGAO-CS/Variation-Transformer-D
 
 Unzip and copy the state transition matrix files (e.g., ```'pop909_train.json'``` and ```'pop909_train_scl.json'```) into the ```'./state_transition_matrix'``` folder. 
 
+Unzip and copy datasets into the ```'./dataset'``` folder. 
+
 Using the script ```markov_var_gen_909.js``` to generate variations. Example usage:
 
 ```
