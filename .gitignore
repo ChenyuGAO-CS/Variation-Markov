@@ -1,4 +1,6 @@
 # Dependency directories
+dataset/
+state_transition_matrix/
 node_modules/
 in/
 out/
