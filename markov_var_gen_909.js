@@ -14,15 +14,20 @@ const sr = require('seed-random')
 
 const mainPaths = {
   "test": {
-    "inStm": "./state_transition_matrix/pop909_train.json",
+    "inStm": path.join(
+      __dirname, "state_transition_matrix/pop909_train.json"
+    ),
     "midi": path.join(
-      "./dataset/POP909-TVar"),
+      __dirname, "dataset/POP909-TVar"
+    ),
     "midiDir": "test",
-    "themeSample": ["002_A_0.mid", "052_B_0.mid", "597_A_0.mid", "623_A_0.mid", "866_A_0.mid"],
-    "sclPath": "./state_transition_matrix",
+    "themeSample": ["623_A_0.mid"],
+    "sclPath": path.join(
+      __dirname, "state_transition_matrix"
+    ),
     "sclName": "pop909_train_scl.json",
     "outputDir": path.join(
-      "./out"
+      __dirname, "out"
     ),
   }
 }
@@ -85,28 +90,14 @@ let param = {
 const mainPath = mainPaths[argv.u]
 const dataEx = require(mainPath["inStm"])
 
-// Deduplicate a particular property of the continuations array, convert the
-// numeric arrays to strings, use the counting performed during deduplication
-// to provide distances between states, and return ready for loading onto a
-// graph.
-// const dataExStr = dataEx.map(function(st){
-//   // Get count of continuations.
-//   const contnCount = count_continuations(st.continuations, "beat_rel_sq_MNN_state")
-//   const contnAndDist = contnCount[0].map(function(contn, idx){
-//     return {
-//       "beat_rel_sq_MNN_state": an.state2string(contn),
-//       "dist": 1/contnCount[1][idx]
-//     }
-//   })
-
-//   return {
-//     "beat_rel_sq_MNN_state": an.state2string(st.beat_rel_sq_MNN_state),
-//     "continuations": contnAndDist
-//   }
-// })
-// console.log("dataEx.length", dataEx.length)
-
-// let g = new mm.Graph(dataExStr, "beat_rel_sq_MNN_state", "continuations", "dist")
+const out_dir = mainPath["outputDir"]
+try {
+  if (!fs.existsSync(out_dir)){
+    fs.mkdirSync(out_dir);
+  }
+} catch (err) {
+  console.error(err);
+}
 
 let g = new mm.Graph()
 dataEx.map(function(d){
@@ -129,11 +120,12 @@ midiDirs = midiDirs.filter(function(fnam){
     return true
   }
 })
-// // Filter MIDIs in ['themeSample']
-// midiDirs = midiDirs.filter(function(midiDir){
-//     return mainPath["themeSample"].indexOf(midiDir) >= 0
-// })
-// // console.log(midiDirs)
+
+// Comment this lines 124-127 if you would like to generate variations for the whole test set.
+midiDirs = midiDirs.filter(function(midiDir){
+    return mainPath["themeSample"].indexOf(midiDir) >= 0
+})
+// console.log(midiDirs)
 
 midiDirs
 .forEach(function(midiDir, jDir){
@@ -179,7 +171,7 @@ midiDirs
   let current_state = an.comp_obj2beat_rel_sq_mnn_states(comp)
   // console.log("current_state", current_state)
 
-  for(let var_idx = 0; var_idx < 10; var_idx ++){
+  for(let var_idx = 0; var_idx < 1; var_idx ++){
     // Perhaps we could try to obtain the beginning and the end states of each measure, 
     // and try to find scenic_path().
     let beg_idx = 0
@@ -261,23 +253,19 @@ midiDirs
     midiOut.header.tempos = tmp_bpm
     const song_name = midiDir.split('.')[0]
 
+    const folder_out = path.join(mainPath["outputDir"], var_idx.toString())
+    try {
+      if (!fs.existsSync(folder_out)){
+        fs.mkdirSync(folder_out);
+      }
+    } catch (err) {
+      console.error(err);
+    }
     fs.writeFileSync(
       path.join(mainPath["outputDir"], var_idx.toString(), song_name + "_markovVar" + ".mid"),
       new Buffer.from(midiOut.toArray())
     )
   }
-  
-
-  // const me = new mm.MidiExport(
-  //   points,
-  //   null,
-  //   path.join(mainPath["outputDir"], "pop909_scenic_" + midiDir + ".mid"),
-  //   param.midiExport
-  // )
-  // fs.writeFileSync(
-  //   path.join(path.join(mainPath["outputDir"], "pop909_scenic_" + seed + ".txt")),
-  //   JSON.stringify(sc_pair, null, 2)
-  // )
 })
 
 
@@ -302,12 +290,6 @@ function path2sc_pairs(pathArr, sclFnam, maxOn){
     if(p in sclData){
       let length_sclData = sclData[p].length
       let sel_context = sclData[p][getRandomInt(length_sclData)]
-      // if(tmpMaxOn < beat_rel_sq_MNN_state[0]){
-      //   tmpMaxOn = beat_rel_sq_MNN_state[0]
-      // }
-      // else{
-      //   break
-      // }
       if(beat_rel_sq_MNN_state[0]>= maxOn){
         break
       }
