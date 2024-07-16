@@ -31,7 +31,7 @@ node markov_var_gen_vgmidi.js -u test
 ```
 
 ## State transition matrix extraction
-TODO: Tom needs to publish a new version of ```maia-markov``` with the ```'construct_scl()'``` method.
+**TODO:** Tom needs to publish a new version of ```maia-markov``` with the ```'construct_scl()'``` method.
 
 Please use scripts ```pop_909_preprocess.js``` and ```vgmidi_preprocess.js``` to prepare state transition matrix if you would like to run Variation Markov on your datasets. 
 
