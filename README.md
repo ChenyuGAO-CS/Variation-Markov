@@ -1,6 +1,12 @@
 # Variation-Markov
 Implementation of Variation Markov.
 
+## Dependencies
+```
+npm install
+```
+
+
 ## Generating variations by using Variation Markov
 Please visit [this page](https://github.com/ChenyuGAO-CS/Variation-Transformer-Data-and-Model) to download the corresponding state transition matrix. 
 
