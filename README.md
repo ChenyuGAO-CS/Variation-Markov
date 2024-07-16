@@ -14,7 +14,8 @@ Unzip and copy the state transition matrix files (e.g., ```'pop909_train.json'``
 
 Unzip and copy datasets into the ```'./dataset'``` folder. 
 
-Using the script ```markov_var_gen_909.js``` to generate variations. Example usage:
+Using the script ```markov_var_gen_909.js``` to generate variations. Please edit [lines 16-33](https://github.com/ChenyuGAO-CS/Variation-Markov/blob/main/markov_var_gen_909.js#L15-L33) to config paths to the corresponding files. 
+Example usage:
 
 ```
 node markov_var_gen_909.js -u test
