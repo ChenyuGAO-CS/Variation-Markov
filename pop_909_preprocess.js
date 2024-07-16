@@ -17,7 +17,7 @@ const sr = require("seed-random")
 // Individual user paths
 const mainPaths = {
   "pop909": {
-    "midi": path.joinpath.join(
+    "midi": path.join(
       __dirname, "dataset/POP909-TVar"
     ),
     "midiDirs": ["train"],
@@ -150,12 +150,12 @@ fs.writeFileSync(
   JSON.stringify(stm, null, 2)
 )
 
-let initialDistbn = an.construct_initial(comps, param)
-initialDistbn = an.prune_initial(initialDistbn, stm, param)
-fs.writeFileSync(
-  path.join(mainPath["outputDir"], mainPath["outputFileName"] + "_initial.json"),
-  JSON.stringify(initialDistbn, null, 2)
-)
+// let initialDistbn = an.construct_initial(comps, param)
+// initialDistbn = an.prune_initial(initialDistbn, stm, param)
+// fs.writeFileSync(
+//   path.join(mainPath["outputDir"], mainPath["outputFileName"] + "_initial.json"),
+//   JSON.stringify(initialDistbn, null, 2)
+// )
 
 let scl = an.construct_scl(comps, param)
 fs.writeFileSync(
