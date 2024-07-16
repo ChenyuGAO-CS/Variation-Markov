@@ -18,10 +18,11 @@ const sr = require("seed-random")
 const mainPaths = {
   "vgmidi": {
     "midi": path.join(
-      "./dataset/VGMIDI-TVar"),
+      __dirname, "dataset/VGMIDI-TVar"
+    ),
     "midiDirs": ["train"],
     "outputDir": path.join(
-      "./state_transition_matrix"
+      __dirname, "state_transition_matrix"
     ),
     "outputFileName": "vgmidi_train"
   }

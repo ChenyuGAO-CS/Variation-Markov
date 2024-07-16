@@ -17,11 +17,12 @@ const sr = require("seed-random")
 // Individual user paths
 const mainPaths = {
   "pop909": {
-    "midi": path.join(
-      "./dataset/POP909-TVar"),
+    "midi": path.joinpath.join(
+      __dirname, "dataset/POP909-TVar"
+    ),
     "midiDirs": ["train"],
     "outputDir": path.join(
-      "./state_transition_matrix"
+      __dirname, "state_transition_matrix"
     ),
     "outputFileName": "pop909_train"
   }
