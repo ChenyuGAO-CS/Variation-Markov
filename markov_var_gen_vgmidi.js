@@ -15,16 +15,21 @@ const { setTimeout } = require('timers')
 
 const mainPaths = {
   "test": {
-    "inStm": "./state_transition_matrix/vgmidi_train.json",
+    "inStm": path.join(
+      __dirname, "state_transition_matrix/vgmidi_train.json"
+    ),
     "midi": path.join(
-      "./dataset/VGMIDI-TVar"),
+      __dirname, "dataset/VGMIDI-TVar"
+    ),
     "midiDir": "test",
     "themeSample": ["e0_real_Ace\ Attorney_Nintendo\ DS_Phoenix\ Wright\ Ace\ Attorney_Ema\ Skye\ Turnabout\ Sisters\ Theme\ 2005_A_0.mid",
                     "e0_real_Castlevania_Game Boy Advance_Castlevania Aria of Sorrow_Inner Quarters_C_0.mid"],
-    "sclPath": "./state_transition_matrix",
+    "sclPath": path.join(
+      __dirname, "state_transition_matrix"
+    ),
     "sclName": "vgmidi_train_scl.json",
     "outputDir": path.join(
-      "./out"
+      __dirname, "out"
     ),
   }
 }
@@ -87,34 +92,14 @@ let param = {
 const mainPath = mainPaths[argv.u]
 const dataEx = require(mainPath["inStm"])
 
-// Deduplicate a particular property of the continuations array, convert the
-// numeric arrays to strings, use the counting performed during deduplication
-// to provide distances between states, and return ready for loading onto a
-// graph.
-// const dataExStr = dataEx.map(function(st){
-//   // Get count of continuations.
-//   const contnCount = count_continuations(st.continuations, "beat_rel_sq_MNN_state")
-//   // console.log("st.beat_rel_sq_MNN_state", st.beat_rel_sq_MNN_state)
-//   const contnAndDist = contnCount[0].map(function(contn, idx){
-//     if(st.beat_rel_sq_MNN_state[0]<contn[0]){
-//       // console.log("+", contn)
-//       return {
-//         "beat_rel_sq_MNN_state": an.state2string(contn),
-//         "dist": 1/contnCount[1][idx]
-//       }
-//     }
-    
-//   })
-//   if(contnAndDist.length > 0){
-//     return {
-//       "beat_rel_sq_MNN_state": an.state2string(st.beat_rel_sq_MNN_state),
-//       "continuations": contnAndDist
-//     }
-//   }
-  
-// })
-// console.log("dataEx.length", dataEx.length)
-// let g = new mm.Graph(dataExStr, "beat_rel_sq_MNN_state", "continuations", "dist")
+const out_dir = mainPath["outputDir"]
+try {
+  if (!fs.existsSync(out_dir)){
+    fs.mkdirSync(out_dir);
+  }
+} catch (err) {
+  console.error(err);
+}
 
 let g = new mm.Graph()
 dataEx.map(function(d){
@@ -138,11 +123,12 @@ midiDirs = midiDirs.filter(function(fnam){
     return true
   }
 })
-// // Filter MIDIs in ['themeSample']
-// midiDirs = midiDirs.filter(function(midiDir){
-//     return mainPath["themeSample"].indexOf(midiDir) >= 0
-// })
-// // console.log(midiDirs)
+
+// Comment this lines 127-131 if you would like to generate variations for the whole test set.
+midiDirs = midiDirs.filter(function(midiDir){
+    return mainPath["themeSample"].indexOf(midiDir) >= 0
+})
+// console.log(midiDirs)
 
 midiDirs
 .forEach(function(midiDir, jDir){
@@ -188,7 +174,7 @@ midiDirs
   let current_state = an.comp_obj2beat_rel_sq_mnn_states(comp)
   console.log("current_state.length", current_state.length)
 
-  for(let var_idx = 0; var_idx < 10; var_idx ++){
+  for(let var_idx = 0; var_idx < 1; var_idx ++){
     // Perhaps we could try to obtain the beginning and the end states of each measure, 
     // and try to find scenic_path().
     let beg_idx = 0
@@ -294,24 +280,20 @@ midiDirs
     }
     console.log("fid:", fid)
 
+    const folder_out = path.join(mainPath["outputDir"], var_idx.toString())
+    try {
+      if (!fs.existsSync(folder_out)){
+        fs.mkdirSync(folder_out);
+      }
+    } catch (err) {
+      console.error(err);
+    }
     fs.writeFileSync(
       path.join(mainPath["outputDir"], var_idx.toString(), fid + "_markovVar" + ".mid"),
       new Buffer.from(midiOut.toArray())
     )
   }
   console.log("jDir:", jDir)
-  
-
-  // const me = new mm.MidiExport(
-  //   points,
-  //   null,
-  //   path.join(mainPath["outputDir"], "pop909_scenic_" + midiDir + ".mid"),
-  //   param.midiExport
-  // )
-  // fs.writeFileSync(
-  //   path.join(path.join(mainPath["outputDir"], "pop909_scenic_" + seed + ".txt")),
-  //   JSON.stringify(sc_pair, null, 2)
-  // )
 })
 
 
@@ -336,12 +318,7 @@ function path2sc_pairs(pathArr, sclFnam, maxOn){
     if(p in sclData){
       let length_sclData = sclData[p].length
       let sel_context = sclData[p][getRandomInt(length_sclData)]
-      // if(tmpMaxOn < beat_rel_sq_MNN_state[0]){
-      //   tmpMaxOn = beat_rel_sq_MNN_state[0]
-      // }
-      // else{
-      //   break
-      // }
+
       if(beat_rel_sq_MNN_state[0]>= maxOn){
         break
       }
