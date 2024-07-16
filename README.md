@@ -10,6 +10,8 @@ npm install
 ## Generating variations by using Variation Markov
 Please visit [this page](https://github.com/ChenyuGAO-CS/Variation-Transformer-Data-and-Model) to download the corresponding state transition matrix. 
 
+Unzip and copy the state transition matrixes into the ```'./state_transition_matrix'``` folder. 
+
 Using the script ```markov_var_gen_909.js``` to generate variations. Example usage:
 
 ```
